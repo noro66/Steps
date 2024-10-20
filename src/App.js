@@ -10,6 +10,7 @@ const messages = [
 function App() {
 
 const [step, setStep] = useState(1);
+const [isOpen, setIsOpen] = useState(true);
 
   function handelPrevious(){
     if (step > 1)  {
@@ -21,9 +22,13 @@ const [step, setStep] = useState(1);
       setStep(step + 1);
     }
   }
+  function handelToggle(){
+    setIsOpen(!isOpen)
+  }
 
-  return (
-    <div className="steps">
+  return <>
+    <button onClick={handelToggle} className="close">&times;</button>
+     {isOpen &&( <div className="steps">
         <div className="numbers">
             <div className={step >= 1 ? 'active' : ''}>1</div>
             <div className={step >= 2 ? 'active' : ''}>2</div>
@@ -31,11 +36,18 @@ const [step, setStep] = useState(1);
          </div>
         <p className="message">Step {step}: {messages[step -1]} </p>
         <div className="buttons">
-          <button onClick={handelPrevious} style={{backgroundColor: '#7950f2', color:'#fff'}}>Pevious</button>
-          <button onClick={handelNext} style={{backgroundColor: '#7950f2', color:'#fff'}}>Nex</button>
+          <Button handleClick={handelPrevious} backgroundColor={'#7950f2'} color={'#fff'} text={'Pevious'}/>
+          <Button handleClick={handelNext} backgroundColor={'#7950f2'} color={'#fff'} text={'Nex'}/>
         </div>
-    </div>
-  );
+    </div>)}
+  </>
+
+}
+
+
+function Button ({handleClick, backgroundColor, color, text}){
+  return (<button onClick={handleClick} style={{backgroundColor: backgroundColor, color: color}}>{text}</button>
+)
 }
 
 export default App;
